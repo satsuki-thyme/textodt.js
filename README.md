@@ -19,4 +19,5 @@
   `<script src="..." charset="utf-16">`
 
 ## 動作
-* odt のマークアップを行い odt に必要なファイルを付加して圧縮して odt ファイルにします  
+* odt のマークアップを行い odt に必要なファイルを付加して圧縮して odt ファイルにします
+* 外部のライブラリとして [FileSaver.js](https://github.com/eligrey/FileSaver.js) と [JSZip](https://stuk.github.io/jszip/) を利用しています
