@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <title>textodt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="textodt.js"></script>
+    <style>
+      body{
+        color: #1e1f1c;
+        background-color: #f1eee9;
+      }
+      #container {
+        position: absolute;
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+      }
+      #textarea {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #30312d;
+        background-color: #faf4ec;
+        border: 1px solid #484944;
+        outline: none;
+      }
+      #file-name {
+        margin-left: 8px;
+        padding: 2px;
+        font-size: 15px;
+        line-height: 1;
+      }
+      #input {
+        display: none;
+      }
+      label:has(#input) {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px;
+        font-size: 86%;
+        line-height: 1;
+        color: #080807;
+        background-color: #f1eee9;
+        border: 1px solid #484944;
+        border-radius: 2px;
+        user-select: none;
+      }
+      label:has(#input):hover {
+        background-color: #e7e1d6;
+      }
+      label:has(#input):active {
+        background-color: #faf4ec;
+      }
+      @media (prefers-color-scheme: dark) {
+        body{
+          color: #f1eee9;
+          background-color: #1e1f1c;
+        }
+        #textarea {
+          color: #f1eee9;
+          background-color: #30312d;
+          border: 1px solid #484944;
+        }
+      }
+      html.dark body{
+        color: #f1eee9;
+        background-color: #1e1f1c;
+      }
+      html.dark #textarea {
+        color: #f1eee9;
+        background-color: #30312d;
+        border: 1px solid #484944;
+      }
+      html.light body{
+        color: #1e1f1c;
+        background-color: #f1eee9;
+      }
+      html.light #textarea {
+        color: #30312d;
+        background-color: #faf4ec;
+        border: 1px solid #484944;
+      }
+    </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        let elm_container = document.getElementById("container")
+        let elm_fileName = document.getElementById("file-name")
+        let elm_input = document.getElementById("input")
+        let elm_textarea = document.getElementById("textarea")
+        elm_textarea.style.height = elm_textarea.getBoundingClientRect().width * (9 / 16) + "px"
+        elm_container.style.height = elm_container.getBoundingClientRect().height + "px"
+        elm_container.style.inset = 0
+        window.addEventListener("dragover", event => {
+          event.preventDefault()
+        })
+        window.addEventListener("drop", event => {
+          event.preventDefault()
+          let fr = new FileReader()
+          fr.readAsText(event.dataTransfer.files[0])
+          fr.addEventListener("load", () => {
+            textodt(fr.result, elm_fileName.value)
+          })
+        })
+        elm_input.addEventListener("input", event => {
+          let fr = new FileReader()
+          fr.readAsText(event.target.files[0])
+          fr.addEventListener("load", () => {
+            textodt(fr.result, elm_fileName.value)
+          })
+          elm_input.value = ""
+        })
+        elm_textarea.addEventListener("input", () => {
+          textodt(elm_textarea.value, elm_fileName.value)
+          elm_textarea.value = ""
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <p>ファイルをドロップするか、フォームからファイルを選択するか、テキストエリアに中身をペーストしてください。</p>
+      <label class="input-element">生成するファイル名<input type="text" id="file-name" value="無題 1"></label><br>
+      <label class="input-element"><input type="file" id="input">ファイルを選択</label>
+      <textarea id="textarea" class="input-element" placeholder="ペースト"></textarea>
+    </div>
+  </body>
+</html>
