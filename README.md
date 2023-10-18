@@ -2,14 +2,10 @@
 テキストファイルを odt 形式に変換する JavaScript のライブラリです。
 
 ## 目次
-- textodt.js  
-  ライブラリ本体。
-- textodt.min.js  
-  ライブラリ本体。圧縮版。
-- sample.html  
-  使い方のサンプル。
-- textodt.html  
-  応用した使い方のサンプル。
+- textodt.js: ライブラリ本体
+- textodt.min.js: ライブラリ本体（圧縮版）
+- sample.html: 使い方のサンプル
+- textodt.html: 応用した使い方のサンプル
 
 ## 説明
 - テキストファイルを odt 形式にい変換します
